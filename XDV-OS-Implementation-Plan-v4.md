@@ -131,7 +131,7 @@ sector/dustlib_collections/src/
 
 #### dustlib_k (K-Regime Systems Library)
 ```
-sector/dustlib_k/src/
+sector/dustlib-k/src/
 ├── lib.ds           # Main library, exports all modules
 ├── memory.ds        # alloc, free, zero_alloc
 ├── threading.ds     # spawn, join, thread ID
