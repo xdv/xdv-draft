@@ -1,3 +1,7 @@
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
 # XDV Design Principles
 ## Cross-Domain Virtualizer - Architectural Design Philosophy
 
@@ -11,7 +15,7 @@
 
 ### 1.1 Domain Equivalence
 
-K-Domain (classical), Q-Domain (quantum), and Φ-Domain (phase-native) are first-class computational substrates. XDV does not treat Q or Φ as accelerators or secondary citizens—they are co-equal domains with native OS-level support.
+K-Domain (classical), Q-Domain (quantum), and Î¦-Domain (phase-native) are first-class computational substrates. XDV does not treat Q or Î¦ as accelerators or secondary citizensâ€”they are co-equal domains with native OS-level support.
 
 **Implications:**
 - All domains receive equal scheduling consideration
@@ -24,12 +28,12 @@ XDV virtualizes domain boundaries and resource contracts rather than emulating f
 
 **Implications:**
 - Domain resources are abstracted as virtual allocations
-- Hardware manifests as virtual domain resources (vCPUs, vQPUs, vΦPUs)
+- Hardware manifests as virtual domain resources (vCPUs, vQPUs, vÎ¦PUs)
 - Multiple isolated hybrid virtual machines may run concurrently
 
 ### 1.3 Deterministic Orchestration
 
-Even when managing probabilistic (Q) or coherence-sensitive (Φ) workloads, orchestration remains deterministic at the system level.
+Even when managing probabilistic (Q) or coherence-sensitive (Î¦) workloads, orchestration remains deterministic at the system level.
 
 **Implications:**
 - Scheduler uses seeded randoms for reproducible execution
@@ -66,7 +70,7 @@ Even when managing probabilistic (Q) or coherence-sensitive (Φ) workloads, orch
 - Coherence-deadline aware scheduler
 - Quantum error metrics in observability layer
 
-### 2.3 Φ-Domain (Phase-Native)
+### 2.3 Î¦-Domain (Phase-Native)
 
 **Principles:**
 - Coherent phase state evolution
@@ -89,12 +93,12 @@ Memory in XDV is domain-aware, not a uniform pool:
 
 - **K-memory**: Deterministic, cacheable, swappable
 - **Q-state regions**: Non-cloneable, measurement-constrained
-- **Φ-state regions**: Coherence-sensitive, transformation-bound
+- **Î¦-state regions**: Coherence-sensitive, transformation-bound
 
 ### 3.2 No-Copy Semantics
 
 - Q-state: Enforced non-cloning at hardware level
-- Φ-state: Enforced integrity and coherence rules
+- Î¦-state: Enforced integrity and coherence rules
 - Cross-domain transfers require explicit contracts
 
 ### 3.3 Shared Memory
@@ -109,7 +113,7 @@ Cross-domain shared memory is explicitly declared and capability-controlled.
 
 The scheduler optimizes across:
 - Time (latency, throughput)
-- Coherence windows (Q, Φ)
+- Coherence windows (Q, Î¦)
 - Error budgets
 - Thermal limits
 - Optical/signal bandwidth
@@ -120,7 +124,7 @@ All domains receive fair consideration unless policy dictates otherwise.
 
 ### 4.3 Coherence-Aware
 
-Q and Φ domain tasks are prioritized based on coherence window expiration.
+Q and Î¦ domain tasks are prioritized based on coherence window expiration.
 
 ---
 
@@ -128,7 +132,7 @@ Q and Φ domain tasks are prioritized based on coherence window expiration.
 
 ### 5.1 Zero-Trust Domain Boundaries
 
-Every K↔Q↔Φ interaction requires explicit capability tokens. No implicit trust between domains.
+Every Kâ†”Qâ†”Î¦ interaction requires explicit capability tokens. No implicit trust between domains.
 
 ### 5.2 Capability-Based Access Control
 
@@ -149,17 +153,17 @@ XDV boots on K-Domain (x64) first:
 2. Domain Abstraction Layer
 3. K-domain scheduler and memory
 4. Security and observability
-5. Probe for Q/Φ hardware
+5. Probe for Q/Î¦ hardware
 
-Q and Φ domains initialize on-demand when hardware is detected.
+Q and Î¦ domains initialize on-demand when hardware is detected.
 
 ### 6.2 Hybrid Modes
 
 XDV supports multiple operational modes:
 - **K-only**: Classical computing on standard x64
 - **Hybrid (K+Q)**: Classical + quantum workloads
-- **Hybrid (K+Φ)**: Classical + phase-native workloads
-- **Full Hybrid (K+Q+Φ)**: All three domains
+- **Hybrid (K+Î¦)**: Classical + phase-native workloads
+- **Full Hybrid (K+Q+Î¦)**: All three domains
 
 ### 6.3 Virtualization
 
@@ -205,6 +209,7 @@ Kernel components targeting highest assurance use formal methods.
 
 ## Summary
 
-XDV is built on the principle that **computation exists across domains** and the **operating system must virtualize domains—not just hardware**. 
+XDV is built on the principle that **computation exists across domains** and the **operating system must virtualize domainsâ€”not just hardware**. 
 
 These principles guide all architectural decisions, ensuring XDV remains true to its mission: a unified execution environment for classical, quantum, and phase-native computational substrates.
+

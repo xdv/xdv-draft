@@ -1,3 +1,7 @@
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
 # XDV Operating System Implementation Plan
 
 **Version:** 1.0  
@@ -21,15 +25,15 @@ This document outlines the implementation roadmap for building a complete XDV Op
 ## Current State
 
 ### Completed Components
-- ✅ **xdv-kernel** - 13 sectors implemented (boot, memory, cpu, drivers, kernel, dal, qdomain, phidomain, cds, umf, hypervisor, sdbm, odt)
-- ✅ All 26 kernel source files compile with DPL v0.2 compiler
-- ✅ CI pipeline configured for sector-by-sector builds
+- âœ… **xdv-kernel** - 13 sectors implemented (boot, memory, cpu, drivers, kernel, dal, qdomain, phidomain, cds, umf, hypervisor, sdbm, odt)
+- âœ… All 26 kernel source files compile with DPL v0.2 compiler
+- âœ… CI pipeline configured for sector-by-sector builds
 
 ### Components to Build
-- ⏳ xdv-boot (bootloader)
-- ⏳ xdv-userspace (core utilities)
-- ⏳ xdv-filesystem (file system)
-- ⏳ xdv-shell (command shell)
+- â³ xdv-boot (bootloader)
+- â³ xdv-userspace (core utilities)
+- â³ xdv-filesystem (file system)
+- â³ xdv-shell (command shell)
 
 ---
 
@@ -37,26 +41,26 @@ This document outlines the implementation roadmap for building a complete XDV Op
 
 ```
 XDV Operating System
-├── xdv-boot/              # Bootloader (stage 1 & 2)
-├── xdv-kernel/            # Kernel (existing)
-│   └── sector/
-│       ├── xdv_boot/     # Boot sector within kernel
-│       ├── xdv_memory/   # Memory management
-│       ├── xdv_cpu/     # CPU/interrupts
-│       ├── xdv_drivers/ # Device drivers
-│       └── ...          # Other sectors
-├── xdv-userspace/        # User-space utilities
-│   ├── init/             # Init process
-│   ├── libc/             # C library
-│   ├── bin/              # System binaries
-│   └── lib/              # Shared libraries
-├── xdv-filesystem/       # File system implementation
-│   ├── xdvfs/           # XDV native filesystem
-│   ├── fatfs/           # FAT filesystem driver
-│   └── ext2/            # EXT2 filesystem driver
-└── xdv-shell/            # Command-line shell
-    ├── shell/           # Interactive shell
-    └── commands/        # Built-in commands
+â”œâ”€â”€ xdv-boot/              # Bootloader (stage 1 & 2)
+â”œâ”€â”€ xdv-kernel/            # Kernel (existing)
+â”‚   â””â”€â”€ sector/
+â”‚       â”œâ”€â”€ xdv_boot/     # Boot sector within kernel
+â”‚       â”œâ”€â”€ xdv_memory/   # Memory management
+â”‚       â”œâ”€â”€ xdv_cpu/     # CPU/interrupts
+â”‚       â”œâ”€â”€ xdv_drivers/ # Device drivers
+â”‚       â””â”€â”€ ...          # Other sectors
+â”œâ”€â”€ xdv-userspace/        # User-space utilities
+â”‚   â”œâ”€â”€ init/             # Init process
+â”‚   â”œâ”€â”€ libc/             # C library
+â”‚   â”œâ”€â”€ bin/              # System binaries
+â”‚   â””â”€â”€ lib/              # Shared libraries
+â”œâ”€â”€ xdv-filesystem/       # File system implementation
+â”‚   â”œâ”€â”€ xdvfs/           # XDV native filesystem
+â”‚   â”œâ”€â”€ fatfs/           # FAT filesystem driver
+â”‚   â””â”€â”€ ext2/            # EXT2 filesystem driver
+â””â”€â”€ xdv-shell/            # Command-line shell
+    â”œâ”€â”€ shell/           # Interactive shell
+    â””â”€â”€ commands/        # Built-in commands
 ```
 
 ---
@@ -70,7 +74,7 @@ Create a bootloader that can load the XDV kernel from storage and transfer contr
 
 ```
 Stage 1 (MBR)           Stage 2 (Bootloader)      Kernel Boot
-─────────────────      ─────────────────────     ──────────────
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€      â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€     â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 - Read stage 2         - Parse partition table   - Setup GDT
 - Jump to stage 2      - Load kernel from disk   - Setup IDT
                        - Parse kernel headers    - Setup paging
@@ -82,12 +86,12 @@ Stage 1 (MBR)           Stage 2 (Bootloader)      Kernel Boot
 #### 1.1 Stage 1 - MBR Bootloader
 ```
 xdv-boot/
-├── stage1/
-│   └── mbr.asm          # 512-byte MBR code
-├── stage2/
-│   ├── boot.asm        # Stage 2 assembly
-│   └── boot.c          # C entry point (later)
-└── Makefile
+â”œâ”€â”€ stage1/
+â”‚   â””â”€â”€ mbr.asm          # 512-byte MBR code
+â”œâ”€â”€ stage2/
+â”‚   â”œâ”€â”€ boot.asm        # Stage 2 assembly
+â”‚   â””â”€â”€ boot.c          # C entry point (later)
+â””â”€â”€ Makefile
 ```
 
 **Requirements:**
@@ -98,16 +102,16 @@ xdv-boot/
 #### 1.2 Stage 2 - Extended Bootloader
 ```
 xdv-boot/
-├── stage2/
-│   ├── boot.asm        # Protected mode setup
-│   ├── disk.asm        # Disk I/O
-│   ├── gdt.asm         # GDT setup
-│   ├── paging.asm      # Enable paging
-│   └── main.c          # Boot main
-├── disk/
-│   └── ata.c           # ATA/IDE driver
-└── fat/
-    └── fat12.c         # FAT12/16 parsing
+â”œâ”€â”€ stage2/
+â”‚   â”œâ”€â”€ boot.asm        # Protected mode setup
+â”‚   â”œâ”€â”€ disk.asm        # Disk I/O
+â”‚   â”œâ”€â”€ gdt.asm         # GDT setup
+â”‚   â”œâ”€â”€ paging.asm      # Enable paging
+â”‚   â””â”€â”€ main.c          # Boot main
+â”œâ”€â”€ disk/
+â”‚   â””â”€â”€ ata.c           # ATA/IDE driver
+â””â”€â”€ fat/
+    â””â”€â”€ fat12.c         # FAT12/16 parsing
 ```
 
 **Requirements:**
@@ -137,27 +141,27 @@ Create the minimal user-space environment needed for system operation.
 ### Directory Structure
 ```
 xdv-userspace/
-├── State.toml
-├── src/
-│   ├── init/            # Init process (PID 1)
-│   ├── libc/           # C standard library
-│   │   ├── string.c
-│   │   ├── stdio.c
-│   │   ├── stdlib.c
-│   │   └── unistd.c
-│   ├── bin/            # User binaries
-│   │   ├── sh/         # Shell
-│   │   ├── ls/         # List files
-│   │   ├── cat/        # Concatenate files
-│   │   ├── echo/       # Echo text
-│   │   ├── mkdir/      # Make directory
-│   │   ├── rm/         # Remove files
-│   │   └── ps/         # Process status
-│   ├── lib/            # Shared libraries
-│   └── syscalls/       # System call wrappers
-└── include/            # Headers
-    └── sys/
-        └── syscalls.h
+â”œâ”€â”€ State.toml
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ init/            # Init process (PID 1)
+â”‚   â”œâ”€â”€ libc/           # C standard library
+â”‚   â”‚   â”œâ”€â”€ string.c
+â”‚   â”‚   â”œâ”€â”€ stdio.c
+â”‚   â”‚   â”œâ”€â”€ stdlib.c
+â”‚   â”‚   â””â”€â”€ unistd.c
+â”‚   â”œâ”€â”€ bin/            # User binaries
+â”‚   â”‚   â”œâ”€â”€ sh/         # Shell
+â”‚   â”‚   â”œâ”€â”€ ls/         # List files
+â”‚   â”‚   â”œâ”€â”€ cat/        # Concatenate files
+â”‚   â”‚   â”œâ”€â”€ echo/       # Echo text
+â”‚   â”‚   â”œâ”€â”€ mkdir/      # Make directory
+â”‚   â”‚   â”œâ”€â”€ rm/         # Remove files
+â”‚   â”‚   â””â”€â”€ ps/         # Process status
+â”‚   â”œâ”€â”€ lib/            # Shared libraries
+â”‚   â””â”€â”€ syscalls/       # System call wrappers
+â””â”€â”€ include/            # Headers
+    â””â”€â”€ sys/
+        â””â”€â”€ syscalls.h
 ```
 
 ### Implementation Steps
@@ -274,22 +278,22 @@ Implement an interactive command-line shell.
 ### Directory Structure
 ```
 xdv-shell/
-├── State.toml
-├── src/
-│   ├── main.c           # Shell entry point
-│   ├── shell.c          # Shell core
-│   ├── parser.c         # Command parser
-│   ├── executor.c       # Command execution
-│   └── builtin/
-│       ├── cd.c         # Change directory
-│       ├── pwd.c        # Print working directory
-│       ├── exit.c       # Exit shell
-│       └── help.c       # Help command
-└── commands/            # External commands
-    ├── ls.c
-    ├── cat.c
-    ├── echo.c
-    └── ...
+â”œâ”€â”€ State.toml
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ main.c           # Shell entry point
+â”‚   â”œâ”€â”€ shell.c          # Shell core
+â”‚   â”œâ”€â”€ parser.c         # Command parser
+â”‚   â”œâ”€â”€ executor.c       # Command execution
+â”‚   â””â”€â”€ builtin/
+â”‚       â”œâ”€â”€ cd.c         # Change directory
+â”‚       â”œâ”€â”€ pwd.c        # Print working directory
+â”‚       â”œâ”€â”€ exit.c       # Exit shell
+â”‚       â””â”€â”€ help.c       # Help command
+â””â”€â”€ commands/            # External commands
+    â”œâ”€â”€ ls.c
+    â”œâ”€â”€ cat.c
+    â”œâ”€â”€ echo.c
+    â””â”€â”€ ...
 ```
 
 ### Implementation Steps
@@ -357,17 +361,17 @@ void execute_pipeline(char *cmd1, char *cmd2) {
 ### Build System
 ```
 xdv-os/
-├── Makefile                    # Main build
-├── boot/
-│   └── Makefile
-├── kernel/
-│   └── Makefile (existing)
-├── userspace/
-│   └── Makefile
-├── filesystem/
-│   └── Makefile
-└── shell/
-    └── Makefile
+â”œâ”€â”€ Makefile                    # Main build
+â”œâ”€â”€ boot/
+â”‚   â””â”€â”€ Makefile
+â”œâ”€â”€ kernel/
+â”‚   â””â”€â”€ Makefile (existing)
+â”œâ”€â”€ userspace/
+â”‚   â””â”€â”€ Makefile
+â”œâ”€â”€ filesystem/
+â”‚   â””â”€â”€ Makefile
+â””â”€â”€ shell/
+    â””â”€â”€ Makefile
 ```
 
 ### Testing Strategy
@@ -473,42 +477,42 @@ jobs:
 
 ```
 xdv-os/
-├── README.md
-├── LICENSE
-├── Makefile
-├── STATE.md
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── xdv-boot/           # NEW: Bootloader
-│   ├── State.toml
-│   ├── stage1/
-│   ├── stage2/
-│   └── Makefile
-├── xdv-kernel/        # EXISTING: Kernel
-│   ├── State.toml
-│   ├── sector/
-│   └── ...
-├── xdv-userspace/     # NEW: User space
-│   ├── State.toml
-│   ├── src/
-│   │   ├── init/
-│   │   ├── libc/
-│   │   └── bin/
-│   └── Makefile
-├── xdv-filesystem/    # NEW: Filesystem
-│   ├── State.toml
-│   ├── src/
-│   │   ├── vfs/
-│   │   ├── fat/
-│   │   └── xdvfs/
-│   └── Makefile
-└── xdv-shell/         # NEW: Shell
-    ├── State.toml
-    ├── src/
-    │   ├── shell.c
-    │   └── builtin/
-    └── Makefile
+â”œâ”€â”€ README.md
+â”œâ”€â”€ LICENSE
+â”œâ”€â”€ Makefile
+â”œâ”€â”€ STATE.md
+â”œâ”€â”€ .github/
+â”‚   â””â”€â”€ workflows/
+â”‚       â””â”€â”€ ci.yml
+â”œâ”€â”€ xdv-boot/           # NEW: Bootloader
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â”œâ”€â”€ stage1/
+â”‚   â”œâ”€â”€ stage2/
+â”‚   â””â”€â”€ Makefile
+â”œâ”€â”€ xdv-kernel/        # EXISTING: Kernel
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â”œâ”€â”€ sector/
+â”‚   â””â”€â”€ ...
+â”œâ”€â”€ xdv-userspace/     # NEW: User space
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ init/
+â”‚   â”‚   â”œâ”€â”€ libc/
+â”‚   â”‚   â””â”€â”€ bin/
+â”‚   â””â”€â”€ Makefile
+â”œâ”€â”€ xdv-filesystem/    # NEW: Filesystem
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ vfs/
+â”‚   â”‚   â”œâ”€â”€ fat/
+â”‚   â”‚   â””â”€â”€ xdvfs/
+â”‚   â””â”€â”€ Makefile
+â””â”€â”€ xdv-shell/         # NEW: Shell
+    â”œâ”€â”€ State.toml
+    â”œâ”€â”€ src/
+    â”‚   â”œâ”€â”€ shell.c
+    â”‚   â””â”€â”€ builtin/
+    â””â”€â”€ Makefile
 ```
 
 ---
@@ -518,3 +522,4 @@ xdv-os/
 This implementation plan provides a roadmap for building a complete XDV Operating System. The phased approach allows incremental development while maintaining a working system at each milestone. The existing xdv-kernel provides a solid foundation, and the additional components (bootloader, userspace, filesystem, shell) will create a fully functional operating system.
 
 **Total Estimated Duration:** 10 weeks
+

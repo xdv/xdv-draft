@@ -1,3 +1,7 @@
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
 # XDVFS: Cross-Domain Virtualizer File System
 ## A Phase-Coherent Native File System for XDV Operating System
 
@@ -9,7 +13,7 @@
 
 ## Abstract
 
-This document defines **XDVFS** (Cross-Domain Virtualizer File System), a novel file system designed specifically for the XDV Operating System. Unlike traditional file systems that manage classical byte storage, XDVFS is designed to manage storage across all three computational domains: K-Domain (classical), Q-Domain (quantum), and Φ-Domain (phase-native).
+This document defines **XDVFS** (Cross-Domain Virtualizer File System), a novel file system designed specifically for the XDV Operating System. Unlike traditional file systems that manage classical byte storage, XDVFS is designed to manage storage across all three computational domains: K-Domain (classical), Q-Domain (quantum), and Î¦-Domain (phase-native).
 
 XDVFS implements Phase Theory principles where:
 - **Phase coherence** is preserved across file operations
@@ -34,7 +38,7 @@ Traditional file systems were designed for classical computing only:
 XDVFS is a domain-aware file system that:
 - Manages classical (K) file data
 - Manages quantum (Q) state files with non-cloning enforcement
-- Manages phase-native (Φ) files with coherence preservation
+- Manages phase-native (Î¦) files with coherence preservation
 - Provides deterministic file operations across all domains
 
 ---
@@ -44,52 +48,52 @@ XDVFS is a domain-aware file system that:
 ### 2.1 From XDV White Paper
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    XDVFS Design Principles                          │
-├─────────────────────────────────────────────────────────────────────┤
-│ • Domain Equivalence: All domain types are first-class             │
-│ • Virtualization: Domain resources as virtual abstractions          │
-│ • Deterministic Operations: Reproducible file behavior             │
-│ • Zero-Trust Storage: Explicit capability tokens for access         │
-└─────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                    XDVFS Design Principles                          â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ â€¢ Domain Equivalence: All domain types are first-class             â”‚
+â”‚ â€¢ Virtualization: Domain resources as virtual abstractions          â”‚
+â”‚ â€¢ Deterministic Operations: Reproducible file behavior             â”‚
+â”‚ â€¢ Zero-Trust Storage: Explicit capability tokens for access         â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 2.2 From Phase Theory
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                  Phase Theory Integration                           │
-├─────────────────────────────────────────────────────────────────────┤
-│ • Phase Primacy: Φ is fundamental storage primitive                 │
-│ │   - Files store phase configurations, not just bytes              │
-│ │   - Phase admissibility determines storage validity               │
-│                                                                       │
-│ • Coherence Windows: Time-bounded storage validity                  │
-│ │   - Files have coherence expiration timestamps                     │
-│ │   - Coherence refresh operations available                        │
-│                                                                       │
-│ • Non-Cloning Enforcement: Q-state files cannot be duplicated        │
-│ │   - Enforced at filesystem level                                  │
-│ │   - Copy-on-write disabled for quantum files                      │
-│                                                                       │
-│ • Observable Invariants: File metadata as phase features             │
-│ │   - Entropy as phase distinguishability                           │
-│ │   - Coherence as storage integrity metric                         │
-└─────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                  Phase Theory Integration                           â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ â€¢ Phase Primacy: Î¦ is fundamental storage primitive                 â”‚
+â”‚ â”‚   - Files store phase configurations, not just bytes              â”‚
+â”‚ â”‚   - Phase admissibility determines storage validity               â”‚
+â”‚                                                                       â”‚
+â”‚ â€¢ Coherence Windows: Time-bounded storage validity                  â”‚
+â”‚ â”‚   - Files have coherence expiration timestamps                     â”‚
+â”‚ â”‚   - Coherence refresh operations available                        â”‚
+â”‚                                                                       â”‚
+â”‚ â€¢ Non-Cloning Enforcement: Q-state files cannot be duplicated        â”‚
+â”‚ â”‚   - Enforced at filesystem level                                  â”‚
+â”‚ â”‚   - Copy-on-write disabled for quantum files                      â”‚
+â”‚                                                                       â”‚
+â”‚ â€¢ Observable Invariants: File metadata as phase features             â”‚
+â”‚ â”‚   - Entropy as phase distinguishability                           â”‚
+â”‚ â”‚   - Coherence as storage integrity metric                         â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 2.3 From DPL Specification
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    DPL Language Integration                         │
-├─────────────────────────────────────────────────────────────────────┤
-│ • Forge: File system modules                                        │
-│ • Shape: File structures, metadata                                  │
-│ • K/Q/Φ Regimes: Domain-specific operations                         │
-│ • Effects: emit for logging, seal for constraints                   │
-│ • Const: Immutable file system configuration                        │
-└─────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                    DPL Language Integration                         â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ â€¢ Forge: File system modules                                        â”‚
+â”‚ â€¢ Shape: File structures, metadata                                  â”‚
+â”‚ â€¢ K/Q/Î¦ Regimes: Domain-specific operations                         â”‚
+â”‚ â€¢ Effects: emit for logging, seal for constraints                   â”‚
+â”‚ â€¢ Const: Immutable file system configuration                        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -99,78 +103,78 @@ XDVFS is a domain-aware file system that:
 ### 3.1 High-Level Structure
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                           XDVFS Architecture                          │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                      XDVFS Superblock                            │ │
-│  │  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  │ │
-│  │  │  Domain    │  │  Phase     │  │ Coherence  │  │  Storage   │  │ │
-│  │  │  Config    │  │  Config    │  │  Config    │  │  Config   │  │ │
-│  │  └────────────┘  └────────────┘  └────────────┘  └────────────┘  │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                     Domain Managers                              │ │
-│  │                                                                   │ │
-│  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐    │ │
-│  │  │   K-Domain     │  │   Q-Domain     │  │   Φ-Domain     │    │ │
-│  │  │   Manager      │  │   Manager      │  │   Manager      │    │ │
-│  │  │                │  │                │  │                │    │ │
-│  │  │ • Classical    │  │ • Q-File      │  │ • Phase-File   │    │ │
-│  │  │   File Ops     │  │   Operations  │  │   Operations   │    │ │
-│  │  │ • Byte Store   │  │ • Non-Clone   │  │ • Coherence    │    │ │
-│  │  │ • Deterministic│  │ • Decoherence │  │ • Admissibility│    │ │
-│  │  └────────────────┘  └────────────────┘  └────────────────┘    │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                      Storage Layer                                │ │
-│  │  ┌────────────┐  ┌────────────┐  ┌────────────┐                │ │
-│  │  │  Block     │  │  Sector    │  │  Wear      │                │ │
-│  │  │  Allocator │  │  Mapper    │  │  Leveling  │                │ │
-│  │  └────────────┘  └────────────┘  └────────────┘                │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                      Cache Layer                                  │ │
-│  │  ┌────────────┐  ┌────────────┐  ┌────────────┐                │ │
-│  │  │    K-Cache │  │    Q-Cache │  │    Φ-Cache │                │ │
-│  │  └────────────┘  └────────────┘  └────────────┘                │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                           XDVFS Architecture                          â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                      XDVFS Superblock                            â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚ â”‚
+â”‚  â”‚  â”‚  Domain    â”‚  â”‚  Phase     â”‚  â”‚ Coherence  â”‚  â”‚  Storage   â”‚  â”‚ â”‚
+â”‚  â”‚  â”‚  Config    â”‚  â”‚  Config    â”‚  â”‚  Config    â”‚  â”‚  Config   â”‚  â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                     Domain Managers                              â”‚ â”‚
+â”‚  â”‚                                                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”‚ â”‚
+â”‚  â”‚  â”‚   K-Domain     â”‚  â”‚   Q-Domain     â”‚  â”‚   Î¦-Domain     â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚   Manager      â”‚  â”‚   Manager      â”‚  â”‚   Manager      â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚                â”‚  â”‚                â”‚  â”‚                â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Classical    â”‚  â”‚ â€¢ Q-File      â”‚  â”‚ â€¢ Phase-File   â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚   File Ops     â”‚  â”‚   Operations  â”‚  â”‚   Operations   â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Byte Store   â”‚  â”‚ â€¢ Non-Clone   â”‚  â”‚ â€¢ Coherence    â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Deterministicâ”‚  â”‚ â€¢ Decoherence â”‚  â”‚ â€¢ Admissibilityâ”‚    â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                      Storage Layer                                â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                â”‚ â”‚
+â”‚  â”‚  â”‚  Block     â”‚  â”‚  Sector    â”‚  â”‚  Wear      â”‚                â”‚ â”‚
+â”‚  â”‚  â”‚  Allocator â”‚  â”‚  Mapper    â”‚  â”‚  Leveling  â”‚                â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                      Cache Layer                                  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                â”‚ â”‚
+â”‚  â”‚  â”‚    K-Cache â”‚  â”‚    Q-Cache â”‚  â”‚    Î¦-Cache â”‚                â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 3.2 On-Disk Layout
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                      XDVFS On-Disk Layout                             │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  Sector 0     │  Superblock (Primary)                                 │
-│  ─────────────┼────────────────────────────────────────────────────── │
-│  Sector 1     │  Domain Config Block                                  │
-│  ─────────────┼────────────────────────────────────────────────────── │
-│  Sector 2     │  Phase Config Block                                   │
-│  ─────────────┼────────────────────────────────────────────────────── │
-│  Sector 3-7   │  Reserved (5 sectors)                                 │
-│  ─────────────┼────────────────────────────────────────────────────── │
-│  Sector 8-15  │  Inode Table (8 sectors = 1024 inodes)              │
-│  ─────────────┼────────────────────────────────────────────────────── │
-│  Sector 16+   │  Data Blocks                                          │
-│               │                                                        │
-│               │  ┌─────────────────────────────────────────────┐     │
-│               │  │  Block Group 0                              │     │
-│               │  │  ├── Inode Bitmap                           │     │
-│               │  │  ├── Block Bitmap                           │     │
-│               │  │  ├── Inode Table                            │     │
-│               │  │  └── Data Blocks                            │     │
-│               │  └─────────────────────────────────────────────┘     │
-│               │                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                      XDVFS On-Disk Layout                             â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                        â”‚
+â”‚  Sector 0     â”‚  Superblock (Primary)                                 â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Sector 1     â”‚  Domain Config Block                                  â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Sector 2     â”‚  Phase Config Block                                   â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Sector 3-7   â”‚  Reserved (5 sectors)                                 â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Sector 8-15  â”‚  Inode Table (8 sectors = 1024 inodes)              â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Sector 16+   â”‚  Data Blocks                                          â”‚
+â”‚               â”‚                                                        â”‚
+â”‚               â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”‚
+â”‚               â”‚  â”‚  Block Group 0                              â”‚     â”‚
+â”‚               â”‚  â”‚  â”œâ”€â”€ Inode Bitmap                           â”‚     â”‚
+â”‚               â”‚  â”‚  â”œâ”€â”€ Block Bitmap                           â”‚     â”‚
+â”‚               â”‚  â”‚  â”œâ”€â”€ Inode Table                            â”‚     â”‚
+â”‚               â”‚  â”‚  â””â”€â”€ Data Blocks                            â”‚     â”‚
+â”‚               â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚
+â”‚               â”‚                                                        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -341,7 +345,7 @@ forge XdvFsDirEntry {
     const FT_SOCKET: K[UInt8] = 6;
     const FT_SYMLINK: K[UInt8] = 7;
     const FT_QUANTUM: K[UInt8] = 8;    // Q-domain file
-    const FT_PHASE: K[UInt8] = 9;      // Φ-domain file
+    const FT_PHASE: K[UInt8] = 9;      // Î¦-domain file
 }
 ```
 
@@ -550,19 +554,19 @@ forge QDomainFileOps {
             convert_to_k_domain(inode, classical);
             K[Ok(K[Unit])]
         } else {
-            // Cannot transfer to Q or Φ domains
+            // Cannot transfer to Q or Î¦ domains
             K[Err(K[FsError::InvalidDomainTransition])]
         }
     }
 }
 ```
 
-### 5.3 Φ-Domain (Phase-Native) Files
+### 5.3 Î¦-Domain (Phase-Native) Files
 
 Phase files store phase configurations with admissibility constraints:
 
 ```dust
-// Φ-Domain File Operations - Phase Coherence
+// Î¦-Domain File Operations - Phase Coherence
 forge PhiDomainFileOps {
     
     // Create phase-native file
@@ -589,7 +593,7 @@ forge PhiDomainFileOps {
             return K[Err(K[FsError::NoSpace])];
         }
         
-        // Initialize as Φ-domain
+        // Initialize as Î¦-domain
         set_inode_type(inode, K[TYPE_REGULAR_PHI]);
         set_inode_domain(inode, K[DOMAIN_PHI]);
         
@@ -615,7 +619,7 @@ forge PhiDomainFileOps {
     proc K::phi_read(
         inode: K[UInt64]
     ) -> K[Result[K[PhiState], K[FsError]]] {
-        // Verify Φ-domain
+        // Verify Î¦-domain
         if !is_phi_domain(inode) {
             return K[Err(K[FsError::DomainMismatch])];
         }
@@ -649,7 +653,7 @@ forge PhiDomainFileOps {
         inode: K[UInt64],
         new_phase: K[PhiState]
     ) -> K[Result[K[Unit], K[FsError]]] {
-        // Verify Φ-domain
+        // Verify Î¦-domain
         if !is_phi_domain(inode) {
             return K[Err(K[FsError::DomainMismatch])];
         }
@@ -801,7 +805,7 @@ forge XdvFsBlockAllocator {
 ### 6.2 Coherence Cache
 
 ```dust
-// XDVFS Coherence Cache - For Q and Φ domain files
+// XDVFS Coherence Cache - For Q and Î¦ domain files
 forge XdvFsCoherenceCache {
     
     const CACHE_SIZE: K[UInt32] = 256;  // Max cached entries
@@ -1066,14 +1070,14 @@ forge XdvFsErrors {
 
 | Feature | XDVFS | ext4 | NTFS | FAT32 |
 |---------|-------|------|------|-------|
-| **Domain-Aware** | ✓ K/Q/Φ | ✗ | ✗ | ✗ |
-| **Quantum Files** | ✓ | ✗ | ✗ | ✗ |
-| **Phase Files** | ✓ | ✗ | ✗ | ✗ |
-| **Non-Cloning** | ✓ | ✗ | ✗ | ✗ |
-| **Coherence Windows** | ✓ | ✗ | ✗ | ✗ |
-| **Admissibility** | ✓ | ✗ | ✗ | ✗ |
-| **Deterministic Ops** | ✓ | Partial | Partial | Partial |
-| **Capability-Based** | ✓ | ACL | ACL | ✗ |
+| **Domain-Aware** | âœ“ K/Q/Î¦ | âœ— | âœ— | âœ— |
+| **Quantum Files** | âœ“ | âœ— | âœ— | âœ— |
+| **Phase Files** | âœ“ | âœ— | âœ— | âœ— |
+| **Non-Cloning** | âœ“ | âœ— | âœ— | âœ— |
+| **Coherence Windows** | âœ“ | âœ— | âœ— | âœ— |
+| **Admissibility** | âœ“ | âœ— | âœ— | âœ— |
+| **Deterministic Ops** | âœ“ | Partial | Partial | Partial |
+| **Capability-Based** | âœ“ | ACL | ACL | âœ— |
 
 ---
 
@@ -1094,3 +1098,4 @@ XDVFS demonstrates that a file system can be designed from first principles to s
 *Document Version: 1.0*  
 *Date: February 2026*  
 *Language: Dust Programming Language (DPL)*
+

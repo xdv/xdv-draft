@@ -1,5 +1,9 @@
-# XDV — Cross-Domain Virtualizer  
-### A K/Q/Φ-Native Operating System  
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
+# XDV â€” Cross-Domain Virtualizer  
+### A K/Q/Î¦-Native Operating System  
 
 **Author:** Dust LLC  
 **Version:** Draft 1.1  
@@ -9,11 +13,11 @@
 
 ## Abstract
 
-XDV (Cross-Domain Virtualizer) is a next-generation operating system designed to natively orchestrate and virtualize **K-domain (classical), Q-domain (quantum), and Φ-domain (phase-native)** computational substrates within a unified execution environment. Unlike traditional operating systems that abstract only deterministic hardware, XDV establishes a substrate-agnostic control layer capable of managing deterministic processors, probabilistic quantum systems, and coherent Φ-native computational media simultaneously.
+XDV (Cross-Domain Virtualizer) is a next-generation operating system designed to natively orchestrate and virtualize **K-domain (classical), Q-domain (quantum), and Î¦-domain (phase-native)** computational substrates within a unified execution environment. Unlike traditional operating systems that abstract only deterministic hardware, XDV establishes a substrate-agnostic control layer capable of managing deterministic processors, probabilistic quantum systems, and coherent Î¦-native computational media simultaneously.
 
-This white paper defines the architectural philosophy, system model, kernel structure, virtualization framework, scheduling paradigm, memory model, security foundations, and deployment strategy of XDV. The system is engineered for hybrid compute platforms developed by Dust LLC, including photonic, quantum, and Φ-coherent architectures.
+This white paper defines the architectural philosophy, system model, kernel structure, virtualization framework, scheduling paradigm, memory model, security foundations, and deployment strategy of XDV. The system is engineered for hybrid compute platforms developed by Dust LLC, including photonic, quantum, and Î¦-coherent architectures.
 
-XDV does not treat Q or Φ as accelerators. It formalizes a multi-domain execution model in which **K, Q, and Φ are co-equal first-class substrates**.
+XDV does not treat Q or Î¦ as accelerators. It formalizes a multi-domain execution model in which **K, Q, and Î¦ are co-equal first-class substrates**.
 
 ---
 
@@ -26,17 +30,17 @@ Traditional operating systems were designed around a single assumption:
 Modern hybrid systems invalidate that assumption.
 
 - **Q-domain computation** introduces probabilistic state evolution.
-- **Φ-domain computation** introduces coherent phase-based transformations that may not follow collapse-based semantics.
+- **Î¦-domain computation** introduces coherent phase-based transformations that may not follow collapse-based semantics.
 - **K-domain computation** remains the deterministic control plane and systems integrity layer.
 
-Most contemporary systems treat Q and Φ hardware as peripheral accelerators. This approach fragments scheduling, security, memory, and execution semantics.
+Most contemporary systems treat Q and Î¦ hardware as peripheral accelerators. This approach fragments scheduling, security, memory, and execution semantics.
 
 XDV proposes a different foundation:
 
 > Computation exists across domains.  
-> The operating system must virtualize domains — not just hardware.
+> The operating system must virtualize domains â€” not just hardware.
 
-XDV is therefore a Cross-Domain Virtualizer: an operating system that treats computational domains (K/Q/Φ) as abstract, schedulable substrates within a unified execution fabric.
+XDV is therefore a Cross-Domain Virtualizer: an operating system that treats computational domains (K/Q/Î¦) as abstract, schedulable substrates within a unified execution fabric.
 
 ---
 
@@ -55,7 +59,7 @@ As hybrid systems scale, these issues prevent reliable deployment.
 
 A true hybrid operating system must provide:
 
-- Unified scheduling across K/Q/Φ  
+- Unified scheduling across K/Q/Î¦  
 - Deterministic orchestration of probabilistic and coherent substrates  
 - Shared security primitives  
 - Cross-domain resource isolation  
@@ -71,23 +75,23 @@ XDV is designed to solve these constraints at the kernel level.
 XDV is built on five core principles:
 
 ### 3.1 Domain Equivalence  
-K, Q, and Φ are first-class computational domains.
+K, Q, and Î¦ are first-class computational domains.
 
 ### 3.2 Virtualization over Emulation  
 XDV virtualizes domain boundaries and resource contracts rather than emulating foreign hardware models.
 
 ### 3.3 Deterministic Orchestration  
-Even when managing probabilistic (Q) or coherence-sensitive (Φ) workloads, orchestration remains deterministic at the system level.
+Even when managing probabilistic (Q) or coherence-sensitive (Î¦) workloads, orchestration remains deterministic at the system level.
 
 ### 3.4 Substrate Transparency  
 Applications target unified execution contracts without manually handling low-level domain switching.
 
-### 3.5 Φ-Native Compatibility  
+### 3.5 Î¦-Native Compatibility  
 The architecture explicitly supports coherent, phase-structured computational systems.
 
 ---
 
-## 4. System Model (K/Q/Φ)
+## 4. System Model (K/Q/Î¦)
 
 XDV operates across three defined domains:
 
@@ -117,7 +121,7 @@ Q-domain execution is hardware-constrained but OS-orchestrated.
 
 ---
 
-### 4.3 Φ-Domain (Phase-Native)
+### 4.3 Î¦-Domain (Phase-Native)
 
 - Coherent phase state evolution  
 - Deterministic or structured transformation models  
@@ -125,7 +129,7 @@ Q-domain execution is hardware-constrained but OS-orchestrated.
 - Coherence-window scheduling  
 - Collapse-optional semantics (architecture dependent)  
 
-Φ-domain enables structured phase manipulation as a computational primitive.
+Î¦-domain enables structured phase manipulation as a computational primitive.
 
 ---
 
@@ -157,12 +161,12 @@ Responsible for scheduling:
 
 - K-domain threads  
 - Q-domain job graphs  
-- Φ-domain transformation windows  
+- Î¦-domain transformation windows  
 
 Scheduling dimensions include:
 
 - Time  
-- Coherence windows (Q, Φ)  
+- Coherence windows (Q, Î¦)  
 - Error budgets  
 - Thermal limits  
 - Optical / signal bandwidth  
@@ -177,12 +181,12 @@ Memory in XDV is domain-aware:
 
 - **K-memory:** deterministic and persistent  
 - **Q-state regions:** non-cloneable and measurement-constrained  
-- **Φ-state regions:** coherence-sensitive and transformation-bound  
+- **Î¦-state regions:** coherence-sensitive and transformation-bound  
 
 UMF enforces:
 
 - No-cloning rules (Q)  
-- Φ-integrity constraints  
+- Î¦-integrity constraints  
 - Controlled domain transfer semantics  
 
 ---
@@ -193,7 +197,7 @@ Virtualizes domain resources:
 
 - Virtual K compute lanes  
 - Virtual logical Q allocations  
-- Virtual Φ computation envelopes  
+- Virtual Î¦ computation envelopes  
 
 Multiple hybrid virtual machines may run concurrently under strict isolation.
 
@@ -216,7 +220,7 @@ Provides:
 
 - Cross-domain telemetry  
 - Q error metrics  
-- Φ coherence diagnostics  
+- Î¦ coherence diagnostics  
 - Deterministic execution tracing  
 
 ---
@@ -227,7 +231,7 @@ An XDV process may contain:
 
 - K-domain control logic  
 - Q-domain probabilistic workloads  
-- Φ-domain coherent transformations  
+- Î¦-domain coherent transformations  
 
 XDV guarantees:
 
@@ -244,7 +248,7 @@ The scheduler minimizes:
 
 - Latency  
 - Decoherence (Q)  
-- Coherence instability (Φ)  
+- Coherence instability (Î¦)  
 - Domain contention  
 
 Subject to:
@@ -260,14 +264,14 @@ The orchestration layer remains deterministic, even when Q-domain outcomes are p
 ## 8. Security Model
 
 ### Zero-Trust Domain Boundaries  
-Every K↔Q↔Φ interaction requires explicit capability tokens.
+Every Kâ†”Qâ†”Î¦ interaction requires explicit capability tokens.
 
 ### Non-Copyable State Enforcement  
 - Q-state: enforced non-cloning  
-- Φ-state: enforced integrity and coherence rules  
+- Î¦-state: enforced integrity and coherence rules  
 
 ### Cryptographic Agility  
-Supports classical, post-quantum, and Φ-compatible primitives.
+Supports classical, post-quantum, and Î¦-compatible primitives.
 
 ### Deterministic Auditability  
 All cross-domain transitions are logged in tamper-resistant records.
@@ -281,8 +285,8 @@ XDV is designed for:
 - Hybrid laptops  
 - Hybrid personal systems  
 - Photonic quantum processors  
-- Distributed K/Q/Φ clusters  
-- Φ-native network nodes  
+- Distributed K/Q/Î¦ clusters  
+- Î¦-native network nodes  
 
 Operational modes include:
 
@@ -313,7 +317,7 @@ DPL enforces domain correctness through type-level guarantees and deterministic 
 
 XDV enables:
 
-- Fully Φ-native distributed networks  
+- Fully Î¦-native distributed networks  
 - Cross-domain deterministic consensus  
 - Unified hybrid cloud infrastructure  
 - Secure hybrid AI acceleration  
@@ -323,12 +327,13 @@ XDV enables:
 
 ## 12. Conclusion
 
-XDV — Cross-Domain Virtualizer — redefines the operating system.
+XDV â€” Cross-Domain Virtualizer â€” redefines the operating system.
 
 It does not extend classical computing with exotic accelerators.
 
-It formalizes computation across **K, Q, and Φ domains** and virtualizes them within a unified deterministic control plane.
+It formalizes computation across **K, Q, and Î¦ domains** and virtualizes them within a unified deterministic control plane.
 
 The operating system is no longer bound to a single physical paradigm.
 
 **XDV virtualizes computation itself.**
+

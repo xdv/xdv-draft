@@ -1,3 +1,7 @@
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
 # XDV Operating System Implementation Plan
 ## Written Entirely in Dust Programming Language (DPL)
 
@@ -13,7 +17,7 @@ This document defines the implementation roadmap for the **XDV Operating System*
 
 ### Key Constraints
 1. **DPL Only** - No external libraries, no libc, no C/ASM dependencies
-2. **XDV Native** - All abstractions based on XDV Design (K/Q/Φ domains)
+2. **XDV Native** - All abstractions based on XDV Design (K/Q/Î¦ domains)
 3. **Phase Theory** - Coherence windows, admissibility, non-cloning
 4. **Boot to Shell** - Complete system from bootloader to interactive shell
 
@@ -35,41 +39,41 @@ This document defines the implementation roadmap for the **XDV Operating System*
 Traditional operating systems use C libraries (libc). XDV uses DPL-native modules:
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Traditional vs XDV Userspace                     │
-├─────────────────────────────────────────────────────────────────────┤
-│  Traditional (C)              │  XDV (DPL)                         │
-│  ─────────────────────────────┼───────────────────────────────     │
-│  libc (string, stdio, etc)   │  dust_module (DPL-native)          │
-│  POSIX syscalls              │  forge_ops (XDV-native IPC)        │
-│  ELF executables             │  dust_executable (DPL bytecode)    │
-│  C standard types            │  DPL shapes and regimes            │
-└─────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                    Traditional vs XDV Userspace                     â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚  Traditional (C)              â”‚  XDV (DPL)                         â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€     â”‚
+â”‚  libc (string, stdio, etc)   â”‚  dust_module (DPL-native)          â”‚
+â”‚  POSIX syscalls              â”‚  forge_ops (XDV-native IPC)        â”‚
+â”‚  ELF executables             â”‚  dust_executable (DPL bytecode)    â”‚
+â”‚  C standard types            â”‚  DPL shapes and regimes            â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 2.2 XDV Domain Model
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      XDV Computational Domains                      │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│   K-Domain (Classical)                                               │
-│   ├── Deterministic instruction streams                              │
-│   ├── Conventional memory semantics                                  │
-│   └── Used for: Boot, kernel, system services                       │
-│                                                                       │
-│   Q-Domain (Quantum)                                                 │
-│   ├── Probabilistic state evolution                                  │
-│   ├── Non-cloning enforced at type level                            │
-│   └── Used for: Quantum jobs, quantum data storage                  │
-│                                                                       │
-│   Φ-Domain (Phase-Native)                                            │
-│   ├── Coherent phase state evolution                                 │
-│   ├── Admissibility constraints                                      │
-│   └── Used for: Phase-native computation, coherence-sensitive data  │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                      XDV Computational Domains                      â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                       â”‚
+â”‚   K-Domain (Classical)                                               â”‚
+â”‚   â”œâ”€â”€ Deterministic instruction streams                              â”‚
+â”‚   â”œâ”€â”€ Conventional memory semantics                                  â”‚
+â”‚   â””â”€â”€ Used for: Boot, kernel, system services                       â”‚
+â”‚                                                                       â”‚
+â”‚   Q-Domain (Quantum)                                                 â”‚
+â”‚   â”œâ”€â”€ Probabilistic state evolution                                  â”‚
+â”‚   â”œâ”€â”€ Non-cloning enforced at type level                            â”‚
+â”‚   â””â”€â”€ Used for: Quantum jobs, quantum data storage                  â”‚
+â”‚                                                                       â”‚
+â”‚   Î¦-Domain (Phase-Native)                                            â”‚
+â”‚   â”œâ”€â”€ Coherent phase state evolution                                 â”‚
+â”‚   â”œâ”€â”€ Admissibility constraints                                      â”‚
+â”‚   â””â”€â”€ Used for: Phase-native computation, coherence-sensitive data  â”‚
+â”‚                                                                       â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -77,66 +81,66 @@ Traditional operating systems use C libraries (libc). XDV uses DPL-native module
 ## 3. Component Architecture
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                          XDV Operating System                         │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                         xdv-boot                                  │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐   │ │
-│  │  │ mbr_stage1   │  │ stage2_ds    │  │  xdvfs_mount        │   │ │
-│  │  │ (512 bytes)  │  │ (DPL boot)   │  │  (XDVFS bootstrap)  │   │ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-kernel                                  │ │
-│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌─────────────┐  │ │
-│  │  │boot    │ │memory  │ │cpu     │ │drivers │ │kernel       │  │ │
-│  │  └────────┘ └────────┘ └────────┘ └────────┘ └─────────────┘  │ │
-│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌─────────────┐  │ │
-│  │  │dal     │ │qdomain │ │phidomain│ │cds     │ │umf          │  │ │
-│  │  └────────┘ └────────┘ └────────┘ └────────┘ └─────────────┘  │ │
-│  │  ┌────────┐ ┌────────┐                                         │ │
-│  │  │hypervisor│ │sdbm   │ ┌─────────────┐                       │ │
-│  │  └────────┘ └────────┘ │odt          │                       │ │
-│  │                        └─────────────┘                       │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-xdvfs                                   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ superblock   │  │ inode_manager │  │ block_allocator    │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ k_file_ops   │  │ q_file_ops   │  │ phi_file_ops       │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ directory    │  │ coherence    │  │ xdvfs_mount        │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                      xdv-runtime                                   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ dust_process │  │ dust_memory  │  │ dust_string        │   │ │
-│  │  │ (Process)    │  │ (Allocator)  │  │ (String ops)       │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ dust_ipc     │  │ dust_scheduler│ │ dust_console       │   │ │
-│  │  │ (IPC)        │  │ (Scheduler)   │  │ (I/O)             │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-shell                                   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ shell_core   │  │ shell_parser  │  │ shell_commands     │   │ │
-│  │  │ (Main loop)  │  │ (Lexer)       │  │ (Built-in cmds)    │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-└────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                          XDV Operating System                         â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                         xdv-boot                                  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ mbr_stage1   â”‚  â”‚ stage2_ds    â”‚  â”‚  xdvfs_mount        â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (512 bytes)  â”‚  â”‚ (DPL boot)   â”‚  â”‚  (XDVFS bootstrap)  â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-kernel                                  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚ â”‚
+â”‚  â”‚  â”‚boot    â”‚ â”‚memory  â”‚ â”‚cpu     â”‚ â”‚drivers â”‚ â”‚kernel       â”‚  â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚ â”‚
+â”‚  â”‚  â”‚dal     â”‚ â”‚qdomain â”‚ â”‚phidomainâ”‚ â”‚cds     â”‚ â”‚umf          â”‚  â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”                                         â”‚ â”‚
+â”‚  â”‚  â”‚hypervisorâ”‚ â”‚sdbm   â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                       â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚odt          â”‚                       â”‚ â”‚
+â”‚  â”‚                        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                       â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-xdvfs                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ superblock   â”‚  â”‚ inode_manager â”‚  â”‚ block_allocator    â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ k_file_ops   â”‚  â”‚ q_file_ops   â”‚  â”‚ phi_file_ops       â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ directory    â”‚  â”‚ coherence    â”‚  â”‚ xdvfs_mount        â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                      xdv-runtime                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ dust_process â”‚  â”‚ dust_memory  â”‚  â”‚ dust_string        â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (Process)    â”‚  â”‚ (Allocator)  â”‚  â”‚ (String ops)       â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ dust_ipc     â”‚  â”‚ dust_schedulerâ”‚ â”‚ dust_console       â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (IPC)        â”‚  â”‚ (Scheduler)   â”‚  â”‚ (I/O)             â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-shell                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ shell_core   â”‚  â”‚ shell_parser  â”‚  â”‚ shell_commands     â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (Main loop)  â”‚  â”‚ (Lexer)       â”‚  â”‚ (Built-in cmds)    â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -151,16 +155,16 @@ Traditional operating systems use C libraries (libc). XDV uses DPL-native module
 
 ```
 xdv-boot/
-├── State.toml
-└── src/
-    ├── boot_mbr.ds           # Stage 1: MBR (512 bytes)
-    ├── boot_stage2.ds        # Stage 2: DPL boot code
-    ├── boot_gdt.ds           # GDT setup
-    ├── boot_idt.ds           # IDT setup
-    ├── boot_paging.ds        # Paging enable
-    ├── boot_disk.ds          # Disk I/O
-    ├── boot_xdvfs.ds         # XDVFS mount & bootstrap
-    └── boot_kernel.ds        # Kernel loader
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ boot_mbr.ds           # Stage 1: MBR (512 bytes)
+    â”œâ”€â”€ boot_stage2.ds        # Stage 2: DPL boot code
+    â”œâ”€â”€ boot_gdt.ds           # GDT setup
+    â”œâ”€â”€ boot_idt.ds           # IDT setup
+    â”œâ”€â”€ boot_paging.ds        # Paging enable
+    â”œâ”€â”€ boot_disk.ds          # Disk I/O
+    â”œâ”€â”€ boot_xdvfs.ds         # XDVFS mount & bootstrap
+    â””â”€â”€ boot_kernel.ds        # Kernel loader
 ```
 
 **DPL Code Example:**
@@ -220,20 +224,20 @@ forge BootXdvFs {
 
 ```
 xdv-kernel/
-├── sector/
-│   ├── xdv_boot/         # Boot sector
-│   ├── xdv_memory/       # Memory management
-│   ├── xdv_cpu/         # CPU, interrupts
-│   ├── xdv_drivers/     # Device drivers
-│   ├── xdv_kernel/      # Core kernel
-│   ├── xdv_dal/         # Domain Abstraction Layer
-│   ├── xdv_qdomain/     # Quantum domain
-│   ├── xdv_phidomain/   # Phase-native domain
-│   ├── xdv_cds/         # Cross-Domain Scheduler
-│   ├── xdv_umf/         # Unified Memory Fabric
-│   ├── xdv_hypervisor/  # Domain Hypervisor
-│   ├── xdv_sdbm/        # Secure Domain Boundary
-│   └── xdv_odt/         # Observability & Trace
+â”œâ”€â”€ sector/
+â”‚   â”œâ”€â”€ xdv_boot/         # Boot sector
+â”‚   â”œâ”€â”€ xdv_memory/       # Memory management
+â”‚   â”œâ”€â”€ xdv_cpu/         # CPU, interrupts
+â”‚   â”œâ”€â”€ xdv_drivers/     # Device drivers
+â”‚   â”œâ”€â”€ xdv_kernel/      # Core kernel
+â”‚   â”œâ”€â”€ xdv_dal/         # Domain Abstraction Layer
+â”‚   â”œâ”€â”€ xdv_qdomain/     # Quantum domain
+â”‚   â”œâ”€â”€ xdv_phidomain/   # Phase-native domain
+â”‚   â”œâ”€â”€ xdv_cds/         # Cross-Domain Scheduler
+â”‚   â”œâ”€â”€ xdv_umf/         # Unified Memory Fabric
+â”‚   â”œâ”€â”€ xdv_hypervisor/  # Domain Hypervisor
+â”‚   â”œâ”€â”€ xdv_sdbm/        # Secure Domain Boundary
+â”‚   â””â”€â”€ xdv_odt/         # Observability & Trace
 ```
 
 ---
@@ -244,18 +248,18 @@ xdv-kernel/
 
 ```
 xdv-xdvfs/
-├── State.toml
-└── src/
-    ├── xdvfs_superblock.ds      # Superblock management
-    ├── xdvfs_inode.ds           # Inode operations
-    ├── xdvfs_block_alloc.ds     # Domain-aware allocator
-    ├── xdvfs_k_file.ds         # K-Domain file ops
-    ├── xdvfs_q_file.ds         # Q-Domain file ops (non-cloning)
-    ├── xdvfs_phi_file.ds       # Φ-Domain file ops
-    ├── xdvfs_directory.ds      # Directory operations
-    ├── xdvfs_mount.ds          # Mount/umount
-    ├── xdvfs_cache.ds          # Coherence cache
-    └── xdvfs_errors.ds        # Error codes
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ xdvfs_superblock.ds      # Superblock management
+    â”œâ”€â”€ xdvfs_inode.ds           # Inode operations
+    â”œâ”€â”€ xdvfs_block_alloc.ds     # Domain-aware allocator
+    â”œâ”€â”€ xdvfs_k_file.ds         # K-Domain file ops
+    â”œâ”€â”€ xdvfs_q_file.ds         # Q-Domain file ops (non-cloning)
+    â”œâ”€â”€ xdvfs_phi_file.ds       # Î¦-Domain file ops
+    â”œâ”€â”€ xdvfs_directory.ds      # Directory operations
+    â”œâ”€â”€ xdvfs_mount.ds          # Mount/umount
+    â”œâ”€â”€ xdvfs_cache.ds          # Coherence cache
+    â””â”€â”€ xdvfs_errors.ds        # Error codes
 ```
 
 **Key DPL Constructs:**
@@ -296,40 +300,40 @@ forge QFileOps {
 
 ```
 xdv-runtime/
-├── State.toml
-└── src/
-    ├── dust_process.ds         # Process management
-    │   ├── process_shape.ds    # Process control
-    │   ├── spawn.ds           # Process creation
-    │   ├── wait.ds            # Process wait
-    │   └── exit.ds            # Process exit
-    ├── dust_memory.ds          # Memory management
-    │   ├── allocator.ds        # Memory allocator
-    │   ├── page_alloc.ds      # Page allocation
-    │   └── mmap.ds            # Memory mapping
-    ├── dust_string.ds          # String operations
-    │   ├── copy.ds            # String copy
-    │   ├── compare.ds         # String compare
-    │   ├── length.ds          # String length
-    │   └── format.ds          # String formatting
-    ├── dust_ipc.ds             # Inter-process communication
-    │   ├── message.ds         # Message passing
-    │   ├── channel.ds         # Channels
-    │   └── signals.ds         # Signal handling
-    ├── dust_scheduler.ds       # Process scheduler
-    │   ├── queue.ds           # Run queue
-    │   ├── quantum.ds         # Time quantum
-    │   └── priority.ds        # Priority scheduling
-    ├── dust_console.ds         # Console I/O
-    │   ├── putchar.ds         # Put character
-    │   ├── getchar.ds         # Get character
-    │   ├── puts.ds             # Put string
-    │   └── gets.ds             # Get string
-    └── dust_fs.ds              # File system interface
-        ├── open.ds            # Open file
-        ├── read.ds            # Read file
-        ├── write.ds           # Write file
-        └── close.ds           # Close file
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ dust_process.ds         # Process management
+    â”‚   â”œâ”€â”€ process_shape.ds    # Process control
+    â”‚   â”œâ”€â”€ spawn.ds           # Process creation
+    â”‚   â”œâ”€â”€ wait.ds            # Process wait
+    â”‚   â””â”€â”€ exit.ds            # Process exit
+    â”œâ”€â”€ dust_memory.ds          # Memory management
+    â”‚   â”œâ”€â”€ allocator.ds        # Memory allocator
+    â”‚   â”œâ”€â”€ page_alloc.ds      # Page allocation
+    â”‚   â””â”€â”€ mmap.ds            # Memory mapping
+    â”œâ”€â”€ dust_string.ds          # String operations
+    â”‚   â”œâ”€â”€ copy.ds            # String copy
+    â”‚   â”œâ”€â”€ compare.ds         # String compare
+    â”‚   â”œâ”€â”€ length.ds          # String length
+    â”‚   â””â”€â”€ format.ds          # String formatting
+    â”œâ”€â”€ dust_ipc.ds             # Inter-process communication
+    â”‚   â”œâ”€â”€ message.ds         # Message passing
+    â”‚   â”œâ”€â”€ channel.ds         # Channels
+    â”‚   â””â”€â”€ signals.ds         # Signal handling
+    â”œâ”€â”€ dust_scheduler.ds       # Process scheduler
+    â”‚   â”œâ”€â”€ queue.ds           # Run queue
+    â”‚   â”œâ”€â”€ quantum.ds         # Time quantum
+    â”‚   â””â”€â”€ priority.ds        # Priority scheduling
+    â”œâ”€â”€ dust_console.ds         # Console I/O
+    â”‚   â”œâ”€â”€ putchar.ds         # Put character
+    â”‚   â”œâ”€â”€ getchar.ds         # Get character
+    â”‚   â”œâ”€â”€ puts.ds             # Put string
+    â”‚   â””â”€â”€ gets.ds             # Get string
+    â””â”€â”€ dust_fs.ds              # File system interface
+        â”œâ”€â”€ open.ds            # Open file
+        â”œâ”€â”€ read.ds            # Read file
+        â”œâ”€â”€ write.ds           # Write file
+        â””â”€â”€ close.ds           # Close file
 ```
 
 **DPL-Native Runtime Example:**
@@ -349,8 +353,8 @@ forge DustProcess {
     shape Process {
         pid: K[UInt32],
         state: K[ProcessState],
-        domain: K[DomainType],        // K, Q, or Φ
-        coherence_ns: K[UInt64],       // For Q/Φ processes
+        domain: K[DomainType],        // K, Q, or Î¦
+        coherence_ns: K[UInt64],       // For Q/Î¦ processes
         parent_pid: K[UInt32],
         exit_code: K[Int32],
         priority: K[UInt8],
@@ -406,25 +410,25 @@ forge DustProcess {
 
 ```
 xdv-shell/
-├── State.toml
-└── src/
-    ├── shell_main.ds           # Entry point
-    ├── shell_loop.ds          # Main loop
-    ├── shell_prompt.ds        # Prompt generation
-    ├── shell_lexer.ds         # Tokenizer
-    ├── shell_parser.ds        # Command parser
-    ├── shell_executor.ds      # Command execution
-    ├── shell_builtin/
-    │   ├── builtin_cd.ds       # Change directory
-    │   ├── builtin_ls.ds       # List files
-    │   ├── builtin_cat.ds      # Concatenate files
-    │   ├── builtin_mkdir.ds    # Make directory
-    │   ├── builtin_rm.ds       # Remove
-    │   ├── builtin_echo.ds     # Echo
-    │   ├── builtin_ps.ds       # Process status
-    │   ├── builtin_exit.ds     # Exit
-    │   └── builtin_help.ds     # Help
-    └── shell_completion.ds    # Tab completion
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ shell_main.ds           # Entry point
+    â”œâ”€â”€ shell_loop.ds          # Main loop
+    â”œâ”€â”€ shell_prompt.ds        # Prompt generation
+    â”œâ”€â”€ shell_lexer.ds         # Tokenizer
+    â”œâ”€â”€ shell_parser.ds        # Command parser
+    â”œâ”€â”€ shell_executor.ds      # Command execution
+    â”œâ”€â”€ shell_builtin/
+    â”‚   â”œâ”€â”€ builtin_cd.ds       # Change directory
+    â”‚   â”œâ”€â”€ builtin_ls.ds       # List files
+    â”‚   â”œâ”€â”€ builtin_cat.ds      # Concatenate files
+    â”‚   â”œâ”€â”€ builtin_mkdir.ds    # Make directory
+    â”‚   â”œâ”€â”€ builtin_rm.ds       # Remove
+    â”‚   â”œâ”€â”€ builtin_echo.ds     # Echo
+    â”‚   â”œâ”€â”€ builtin_ps.ds       # Process status
+    â”‚   â”œâ”€â”€ builtin_exit.ds     # Exit
+    â”‚   â””â”€â”€ builtin_help.ds     # Help
+    â””â”€â”€ shell_completion.ds    # Tab completion
 ```
 
 **Shell Example:**
@@ -484,9 +488,9 @@ forge ShellLoop {
 |------|-------------|-------|
 | 4 | Superblock + Inodes | xdvfs_superblock.ds, xdvfs_inode.ds |
 | 5 | K-Domain Files + Directory | xdvfs_k_file.ds, xdvfs_directory.ds |
-| 6 | Q/Φ Domain Files | xdvfs_q_file.ds, xdvfs_phi_file.ds |
+| 6 | Q/Î¦ Domain Files | xdvfs_q_file.ds, xdvfs_phi_file.ds |
 
-**Milestone:** XDVFS can create, read, write K/Q/Φ files
+**Milestone:** XDVFS can create, read, write K/Q/Î¦ files
 
 ### Phase 3: xdv-runtime (Weeks 7-9)
 
@@ -539,7 +543,7 @@ forge ModuleName {
 ```dust
 proc K::k_function() -> K[Unit] { }   // Classical
 proc Q::q_function() -> Q[Unit] { }   // Quantum
-proc Φ::phi_function() -> Φ[Unit] { } // Phase-native
+proc Î¦::phi_function() -> Î¦[Unit] { } // Phase-native
 ```
 
 ### 6.3 Effects
@@ -555,59 +559,59 @@ seal data with invariant;  // Seal data
 
 ```
 xdv-os/
-├── README.md
-├── LICENSE
-├── State.toml
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── xdv-boot/                 # NEW: Bootloader
-│   ├── State.toml
-│   └── src/
-│       ├── boot_mbr.ds
-│       ├── boot_stage2.ds
-│       ├── boot_gdt.ds
-│       ├── boot_idt.ds
-│       ├── boot_paging.ds
-│       ├── boot_disk.ds
-│       ├── boot_xdvfs.ds
-│       └── boot_kernel.ds
-├── xdv-kernel/              # EXISTING: 13 sectors
-│   ├── State.toml
-│   └── sector/
-├── xdv-xdvfs/              # NEW: Native file system
-│   ├── State.toml
-│   └── src/
-│       ├── xdvfs_superblock.ds
-│       ├── xdvfs_inode.ds
-│       ├── xdvfs_block_alloc.ds
-│       ├── xdvfs_k_file.ds
-│       ├── xdvfs_q_file.ds
-│       ├── xdvfs_phi_file.ds
-│       ├── xdvfs_directory.ds
-│       ├── xdvfs_mount.ds
-│       ├── xdvfs_cache.ds
-│       └── xdvfs_errors.ds
-├── xdv-runtime/            # NEW: DPL-native runtime
-│   ├── State.toml
-│   └── src/
-│       ├── dust_process/
-│       ├── dust_memory/
-│       ├── dust_string/
-│       ├── dust_ipc/
-│       ├── dust_scheduler/
-│       ├── dust_console/
-│       └── dust_fs/
-└── xdv-shell/             # NEW: Command shell
-    ├── State.toml
-    └── src/
-        ├── shell_main.ds
-        ├── shell_loop.ds
-        ├── shell_lexer.ds
-        ├── shell_parser.ds
-        ├── shell_executor.ds
-        ├── shell_builtin/
-        └── shell_completion.ds
+â”œâ”€â”€ README.md
+â”œâ”€â”€ LICENSE
+â”œâ”€â”€ State.toml
+â”œâ”€â”€ .github/
+â”‚   â””â”€â”€ workflows/
+â”‚       â””â”€â”€ ci.yml
+â”œâ”€â”€ xdv-boot/                 # NEW: Bootloader
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ boot_mbr.ds
+â”‚       â”œâ”€â”€ boot_stage2.ds
+â”‚       â”œâ”€â”€ boot_gdt.ds
+â”‚       â”œâ”€â”€ boot_idt.ds
+â”‚       â”œâ”€â”€ boot_paging.ds
+â”‚       â”œâ”€â”€ boot_disk.ds
+â”‚       â”œâ”€â”€ boot_xdvfs.ds
+â”‚       â””â”€â”€ boot_kernel.ds
+â”œâ”€â”€ xdv-kernel/              # EXISTING: 13 sectors
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ sector/
+â”œâ”€â”€ xdv-xdvfs/              # NEW: Native file system
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ xdvfs_superblock.ds
+â”‚       â”œâ”€â”€ xdvfs_inode.ds
+â”‚       â”œâ”€â”€ xdvfs_block_alloc.ds
+â”‚       â”œâ”€â”€ xdvfs_k_file.ds
+â”‚       â”œâ”€â”€ xdvfs_q_file.ds
+â”‚       â”œâ”€â”€ xdvfs_phi_file.ds
+â”‚       â”œâ”€â”€ xdvfs_directory.ds
+â”‚       â”œâ”€â”€ xdvfs_mount.ds
+â”‚       â”œâ”€â”€ xdvfs_cache.ds
+â”‚       â””â”€â”€ xdvfs_errors.ds
+â”œâ”€â”€ xdv-runtime/            # NEW: DPL-native runtime
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ dust_process/
+â”‚       â”œâ”€â”€ dust_memory/
+â”‚       â”œâ”€â”€ dust_string/
+â”‚       â”œâ”€â”€ dust_ipc/
+â”‚       â”œâ”€â”€ dust_scheduler/
+â”‚       â”œâ”€â”€ dust_console/
+â”‚       â””â”€â”€ dust_fs/
+â””â”€â”€ xdv-shell/             # NEW: Command shell
+    â”œâ”€â”€ State.toml
+    â””â”€â”€ src/
+        â”œâ”€â”€ shell_main.ds
+        â”œâ”€â”€ shell_loop.ds
+        â”œâ”€â”€ shell_lexer.ds
+        â”œâ”€â”€ shell_parser.ds
+        â”œâ”€â”€ shell_executor.ds
+        â”œâ”€â”€ shell_builtin/
+        â””â”€â”€ shell_completion.ds
 ```
 
 ---
@@ -641,9 +645,9 @@ This implementation plan defines building XDV OS using only DPL:
 **Total: 15 weeks**
 
 The system follows XDV Design and Phase Theory principles:
-- Domain equivalence (K/Q/Φ first-class)
+- Domain equivalence (K/Q/Î¦ first-class)
 - Non-cloning enforcement for Q files
-- Coherence windows for Φ files
+- Coherence windows for Î¦ files
 - Deterministic operations throughout
 
 All code written exclusively in DPL.
@@ -653,3 +657,4 @@ All code written exclusively in DPL.
 *Document Version: 3.0*  
 *Date: February 2026*  
 *Based On: XDV White Paper, Phase Theory, DPL Specification*
+

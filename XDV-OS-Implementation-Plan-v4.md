@@ -1,3 +1,7 @@
+﻿> ARCHIVED DRAFT NOTICE
+> Non-normative historical artifact. Do not treat this file as canonical specification.
+> Canonical source: ../xdv-spec (see README.md, Corpus.md, and requirement index artifacts).
+> New work and requirement changes must be authored in ../xdv-spec.
 # XDV Operating System Implementation Plan
 ## Using dustlib & dustlib_k - K-Domain Focus
 
@@ -15,13 +19,13 @@ This implementation plan defines building the XDV Operating System using **dustl
 1. **K-Domain Only** - Runs on classical x86-64 hardware
 2. **dustlib + dustlib_k** - Uses DPL standard libraries
 3. **Full K Functionality** - Complete classical OS features
-4. **Domain-Aware XDVFS** - Filesystem has Q/Φ type awareness (types defined, not functional)
+4. **Domain-Aware XDVFS** - Filesystem has Q/Î¦ type awareness (types defined, not functional)
 5. **Boot to Shell** - Complete system from bootloader to interactive shell
 
 ### Libraries Used
 ```
-dustlib      → Core types, Result, Option, String, Collections
-dustlib_k   → Memory, Threading, Sync, I/O, Unsafe
+dustlib      â†’ Core types, Result, Option, String, Collections
+dustlib_k   â†’ Memory, Threading, Sync, I/O, Unsafe
 ```
 
 ---
@@ -29,79 +33,79 @@ dustlib_k   → Memory, Threading, Sync, I/O, Unsafe
 ## 2. Architecture Overview
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                          XDV Operating System                         │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       Dependencies                                 │ │
-│  │  ┌────────────────────┐  ┌─────────────────────────────────┐    │ │
-│  │  │ dustlib            │  │ dustlib_k                        │    │ │
-│  │  │ • Core types       │  │ • memory (alloc, free)          │    │ │
-│  │  │ • Result, Option   │  │ • threading (spawn, join)       │    │ │
-│  │  │ • String, Slice   │  │ • sync (mutex, condvar)        │    │ │
-│  │  │ • Collections     │  │ • io (file, port, mmio)        │    │ │
-│  │  │ • Formatting      │  │ • unsafe (raw memory)          │    │ │
-│  │  └────────────────────┘  └─────────────────────────────────┘    │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                         xdv-boot                                  │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐   │ │
-│  │  │ boot_mbr    │  │ boot_stage1  │  │ boot_stage2         │   │ │
-│  │  │ (512 bytes) │  │ (DPL)        │  │ (DPL + dustlib_k)  │   │ │
-│  │  └──────────────┘  └──────────────┘  └──────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-kernel                                   │ │
-│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌─────────────┐  │ │
-│  │  │boot    │ │memory  │ │cpu     │ │drivers │ │kernel       │  │ │
-│  │  └────────┘ └────────┘ └────────┘ └────────┘ └─────────────┘  │ │
-│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌─────────────┐  │ │
-│  │  │dal     │ │qdomain │ │phidomain│ │cds     │ │umf          │  │ │
-│  │  └────────┘ └────────┘ └────────┘ └────────┘ └─────────────┘  │ │
-│  │  ┌────────┐ ┌────────┐                                         │ │
-│  │  │hypervisor│ │sdbm   │ ┌─────────────┐                       │ │
-│  │  └────────┘ └────────┘ │odt          │                       │ │
-│  │                        └─────────────┘                       │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-xdvfs                                   │ │
-│  │  K-Domain (Full):           Q/Φ-Domain (Awareness Only):       │ │
-│  │  ┌──────────────┐           ┌─────────────────────────┐       │ │
-│  │  │ K-File ops  │           │ Q-File types (stubbed)   │       │ │
-│  │  │ • create    │           │ • QState shape           │       │ │
-│  │  │ • read      │           │ • non-cloning marker     │       │ │
-│  │  │ • write     │           │ Φ-File types (stubbed)   │       │ │
-│  │  │ • delete    │           │ • PhiState shape         │       │ │
-│  │  └──────────────┘           │ • coherence marker      │       │ │
-│  │                             └─────────────────────────┘       │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                      xdv-runtime                                  │ │
-│  │  Uses dustlib_k:           Uses dustlib:                        │ │
-│  │  ┌──────────────┐           ┌─────────────────────────┐       │ │
-│  │  │ runtime_io   │           │ runtime_string          │       │ │
-│  │  │ (dustlib_k::io)│         │ (dustlib::str)         │       │ │
-│  │  └──────────────┘           └─────────────────────────┘       │ │
-│  │  ┌──────────────┐           ┌─────────────────────────┐       │ │
-│  │  │ runtime_mem │           │ runtime_process         │       │ │
-│  │  │ (dustlib_k::memory)│   │ (dustlib_k::threading) │       │ │
-│  │  └──────────────┘           └─────────────────────────┘       │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌──────────────────────────────────────────────────────────────────┐ │
-│  │                       xdv-shell                                   │ │
-│  │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐   │ │
-│  │  │ shell_main   │  │ shell_parser │  │ shell_commands     │   │ │
-│  │  │ (dustlib_k)  │  │ (dustlib)   │  │ (dustlib + k)     │   │ │
-│  │  └──────────────┘  └──────────────┘  └────────────────────┘   │ │
-│  └──────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-└────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                          XDV Operating System                         â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       Dependencies                                 â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”‚ â”‚
+â”‚  â”‚  â”‚ dustlib            â”‚  â”‚ dustlib_k                        â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Core types       â”‚  â”‚ â€¢ memory (alloc, free)          â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Result, Option   â”‚  â”‚ â€¢ threading (spawn, join)       â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ String, Slice   â”‚  â”‚ â€¢ sync (mutex, condvar)        â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Collections     â”‚  â”‚ â€¢ io (file, port, mmio)        â”‚    â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ Formatting      â”‚  â”‚ â€¢ unsafe (raw memory)          â”‚    â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                         xdv-boot                                  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ boot_mbr    â”‚  â”‚ boot_stage1  â”‚  â”‚ boot_stage2         â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (512 bytes) â”‚  â”‚ (DPL)        â”‚  â”‚ (DPL + dustlib_k)  â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-kernel                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚ â”‚
+â”‚  â”‚  â”‚boot    â”‚ â”‚memory  â”‚ â”‚cpu     â”‚ â”‚drivers â”‚ â”‚kernel       â”‚  â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚ â”‚
+â”‚  â”‚  â”‚dal     â”‚ â”‚qdomain â”‚ â”‚phidomainâ”‚ â”‚cds     â”‚ â”‚umf          â”‚  â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”                                         â”‚ â”‚
+â”‚  â”‚  â”‚hypervisorâ”‚ â”‚sdbm   â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                       â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚odt          â”‚                       â”‚ â”‚
+â”‚  â”‚                        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                       â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-xdvfs                                   â”‚ â”‚
+â”‚  â”‚  K-Domain (Full):           Q/Î¦-Domain (Awareness Only):       â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚ â”‚
+â”‚  â”‚  â”‚ K-File ops  â”‚           â”‚ Q-File types (stubbed)   â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ create    â”‚           â”‚ â€¢ QState shape           â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ read      â”‚           â”‚ â€¢ non-cloning marker     â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ write     â”‚           â”‚ Î¦-File types (stubbed)   â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ â€¢ delete    â”‚           â”‚ â€¢ PhiState shape         â”‚       â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â”‚ â€¢ coherence marker      â”‚       â”‚ â”‚
+â”‚  â”‚                             â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                      xdv-runtime                                  â”‚ â”‚
+â”‚  â”‚  Uses dustlib_k:           Uses dustlib:                        â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚ â”‚
+â”‚  â”‚  â”‚ runtime_io   â”‚           â”‚ runtime_string          â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ (dustlib_k::io)â”‚         â”‚ (dustlib::str)         â”‚       â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚ â”‚
+â”‚  â”‚  â”‚ runtime_mem â”‚           â”‚ runtime_process         â”‚       â”‚ â”‚
+â”‚  â”‚  â”‚ (dustlib_k::memory)â”‚   â”‚ (dustlib_k::threading) â”‚       â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚                       xdv-shell                                   â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚ â”‚
+â”‚  â”‚  â”‚ shell_main   â”‚  â”‚ shell_parser â”‚  â”‚ shell_commands     â”‚   â”‚ â”‚
+â”‚  â”‚  â”‚ (dustlib_k)  â”‚  â”‚ (dustlib)   â”‚  â”‚ (dustlib + k)     â”‚   â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                                         â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -113,31 +117,31 @@ dustlib_k   → Memory, Threading, Sync, I/O, Unsafe
 #### dustlib (Core Library)
 ```
 sector/dustlib_core/src/
-├── lib.ds           # Main library, exports all modules
-├── prelude.ds       # Auto-imported definitions
-├── result.ds        # Result<T, E> type
-├── option.ds        # Option<T> type
-├── str/             # String operations
-├── slice/           # Slice type
-├── primitive/       # Integer, bool methods
-├── mem/             # Memory utilities
-├── ops/             # Operator traits (Add, Sub, etc.)
-├── fmt/             # Formatting (Display, Debug)
-└── macros/          # Core macros
+â”œâ”€â”€ lib.ds           # Main library, exports all modules
+â”œâ”€â”€ prelude.ds       # Auto-imported definitions
+â”œâ”€â”€ result.ds        # Result<T, E> type
+â”œâ”€â”€ option.ds        # Option<T> type
+â”œâ”€â”€ str/             # String operations
+â”œâ”€â”€ slice/           # Slice type
+â”œâ”€â”€ primitive/       # Integer, bool methods
+â”œâ”€â”€ mem/             # Memory utilities
+â”œâ”€â”€ ops/             # Operator traits (Add, Sub, etc.)
+â”œâ”€â”€ fmt/             # Formatting (Display, Debug)
+â””â”€â”€ macros/          # Core macros
 
 sector/dustlib_collections/src/
-└── lib.ds           # Vec<T>, HashMap<K, V> (future)
+â””â”€â”€ lib.ds           # Vec<T>, HashMap<K, V> (future)
 ```
 
 #### dustlib_k (K-Regime Systems Library)
 ```
 sector/dustlib-k/src/
-├── lib.ds           # Main library, exports all modules
-├── memory.ds        # alloc, free, zero_alloc
-├── threading.ds     # spawn, join, thread ID
-├── sync.ds          # Mutex, CondVar, Once
-├── io.ds            # File, Port, MMIO operations
-└── unsafe.ds        # Raw memory operations
+â”œâ”€â”€ lib.ds           # Main library, exports all modules
+â”œâ”€â”€ memory.ds        # alloc, free, zero_alloc
+â”œâ”€â”€ threading.ds     # spawn, join, thread ID
+â”œâ”€â”€ sync.ds          # Mutex, CondVar, Once
+â”œâ”€â”€ io.ds            # File, Port, MMIO operations
+â””â”€â”€ unsafe.ds        # Raw memory operations
 ```
 
 ---
@@ -148,16 +152,16 @@ Uses **dustlib_k::io** for disk access
 
 ```
 xdv-boot/
-├── State.toml
-└── src/
-    ├── boot_mbr.ds          # Stage 1: 512-byte MBR
-    ├── boot_stage1.ds       # Stage 2: Basic init
-    ├── boot_gdt.ds          # GDT setup
-    ├── boot_idt.ds          # IDT setup
-    ├── boot_paging.ds       # Enable paging
-    ├── boot_disk.ds         # Disk I/O (dustlib_k::io)
-    ├── boot_xdvfs_mount.ds  # Mount XDVFS
-    └── boot_kernel_load.ds  # Load kernel
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ boot_mbr.ds          # Stage 1: 512-byte MBR
+    â”œâ”€â”€ boot_stage1.ds       # Stage 2: Basic init
+    â”œâ”€â”€ boot_gdt.ds          # GDT setup
+    â”œâ”€â”€ boot_idt.ds          # IDT setup
+    â”œâ”€â”€ boot_paging.ds       # Enable paging
+    â”œâ”€â”€ boot_disk.ds         # Disk I/O (dustlib_k::io)
+    â”œâ”€â”€ boot_xdvfs_mount.ds  # Mount XDVFS
+    â””â”€â”€ boot_kernel_load.ds  # Load kernel
 ```
 
 **Code Example:**
@@ -207,21 +211,21 @@ Already implemented 13 sectors using dustlib/dustlib_k patterns:
 ### 3.4 xdv-xdvfs (Domain-Aware File System)
 
 **K-Domain:** Fully functional
-**Q/Φ Domains:** Type definitions only (stubbed)
+**Q/Î¦ Domains:** Type definitions only (stubbed)
 
 ```
 xdv-xdvfs/
-├── State.toml
-└── src/
-    ├── xdvfs_superblock.ds   # Superblock (dustlib types)
-    ├── xdvfs_inode.ds        # Inode management
-    ├── xdvfs_block_alloc.ds  # Block allocation
-    ├── xdvfs_k_file.ds      # K-File operations (FULL)
-    ├── xdvfs_q_types.ds     # Q-File types (STUB - awareness only)
-    ├── xdvfs_phi_types.ds   # Φ-File types (STUB - awareness only)
-    ├── xdvfs_directory.ds   # Directory ops (dustlib)
-    ├── xdvfs_mount.ds       # Mount operations
-    └── xdvfs_errors.ds      # Error codes
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ xdvfs_superblock.ds   # Superblock (dustlib types)
+    â”œâ”€â”€ xdvfs_inode.ds        # Inode management
+    â”œâ”€â”€ xdvfs_block_alloc.ds  # Block allocation
+    â”œâ”€â”€ xdvfs_k_file.ds      # K-File operations (FULL)
+    â”œâ”€â”€ xdvfs_q_types.ds     # Q-File types (STUB - awareness only)
+    â”œâ”€â”€ xdvfs_phi_types.ds   # Î¦-File types (STUB - awareness only)
+    â”œâ”€â”€ xdvfs_directory.ds   # Directory ops (dustlib)
+    â”œâ”€â”€ xdvfs_mount.ds       # Mount operations
+    â””â”€â”€ xdvfs_errors.ds      # Error codes
 ```
 
 **Code Example - K-File (Full):**
@@ -270,7 +274,7 @@ forge KFileOps {
 }
 ```
 
-**Code Example - Q/Φ Types (Stubbed):**
+**Code Example - Q/Î¦ Types (Stubbed):**
 ```dust
 use dustlib::option::Option;
 
@@ -308,10 +312,10 @@ forge QTypes {
 ```
 
 ```dust
-// xdvfs_phi_types.ds - Φ-Domain type awareness (stubbed)
+// xdvfs_phi_types.ds - Î¦-Domain type awareness (stubbed)
 forge PhiTypes {
     
-    // Φ-File type marker
+    // Î¦-File type marker
     const FILE_TYPE_PHASE: K[UInt16] = 3;
     
     // Phase state placeholder (type only, not functional)
@@ -327,11 +331,11 @@ forge PhiTypes {
         name: K[Str],
         phase_config: K[PhiConfig]
     ) -> K[Result[K[UInt64], K[FsError]]] {
-        // Φ-Domain not available on K-only hardware
+        // Î¦-Domain not available on K-only hardware
         K[Err(K[FsError::DomainNotAvailable])]
     }
     
-    // Check if Φ-Domain is available
+    // Check if Î¦-Domain is available
     proc K::phi_available() -> K[Bool] {
         // Always false for K-only system
         return 0;
@@ -347,16 +351,16 @@ Uses **dustlib** and **dustlib_k**
 
 ```
 xdv-runtime/
-├── State.toml
-└── src/
-    ├── runtime_io.ds         # I/O (wraps dustlib_k::io)
-    ├── runtime_memory.ds     # Memory (wraps dustlib_k::memory)
-    ├── runtime_string.ds     # String (wraps dustlib::str)
-    ├── runtime_process.ds    # Process (wraps dustlib_k::threading)
-    ├── runtime_scheduler.ds  # Scheduler
-    ├── runtime_fs.ds         # FS interface (wraps xdvfs)
-    ├── runtime_console.ds    # Console I/O
-    └── runtime_init.ds       # Init process (PID 1)
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ runtime_io.ds         # I/O (wraps dustlib_k::io)
+    â”œâ”€â”€ runtime_memory.ds     # Memory (wraps dustlib_k::memory)
+    â”œâ”€â”€ runtime_string.ds     # String (wraps dustlib::str)
+    â”œâ”€â”€ runtime_process.ds    # Process (wraps dustlib_k::threading)
+    â”œâ”€â”€ runtime_scheduler.ds  # Scheduler
+    â”œâ”€â”€ runtime_fs.ds         # FS interface (wraps xdvfs)
+    â”œâ”€â”€ runtime_console.ds    # Console I/O
+    â””â”€â”€ runtime_init.ds       # Init process (PID 1)
 ```
 
 **Code Example:**
@@ -413,25 +417,25 @@ forge Console {
 
 ```
 xdv-shell/
-├── State.toml
-└── src/
-    ├── shell_main.ds        # Entry point
-    ├── shell_loop.ds       # Main loop
-    ├── shell_prompt.ds     # Prompt generation
-    ├── shell_lexer.ds      # Tokenizer (dustlib::str)
-    ├── shell_parser.ds     # Command parser (dustlib)
-    ├── shell_executor.ds  # Command execution
-    ├── shell_builtin/
-    │   ├── builtin_cd.ds   # cd using xdvfs
-    │   ├── builtin_ls.ds   # ls using xdvfs
-    │   ├── builtin_cat.ds   # cat using xdvfs
-    │   ├── builtin_mkdir.ds # mkdir using xdvfs
-    │   ├── builtin_rm.ds    # rm using xdvfs
-    │   ├── builtin_echo.ds  # echo
-    │   ├── builtin_ps.ds    # process status
-    │   ├── builtin_help.ds  # help
-    │   └── builtin_exit.ds  # exit
-    └── shell_completion.ds # Tab completion
+â”œâ”€â”€ State.toml
+â””â”€â”€ src/
+    â”œâ”€â”€ shell_main.ds        # Entry point
+    â”œâ”€â”€ shell_loop.ds       # Main loop
+    â”œâ”€â”€ shell_prompt.ds     # Prompt generation
+    â”œâ”€â”€ shell_lexer.ds      # Tokenizer (dustlib::str)
+    â”œâ”€â”€ shell_parser.ds     # Command parser (dustlib)
+    â”œâ”€â”€ shell_executor.ds  # Command execution
+    â”œâ”€â”€ shell_builtin/
+    â”‚   â”œâ”€â”€ builtin_cd.ds   # cd using xdvfs
+    â”‚   â”œâ”€â”€ builtin_ls.ds   # ls using xdvfs
+    â”‚   â”œâ”€â”€ builtin_cat.ds   # cat using xdvfs
+    â”‚   â”œâ”€â”€ builtin_mkdir.ds # mkdir using xdvfs
+    â”‚   â”œâ”€â”€ builtin_rm.ds    # rm using xdvfs
+    â”‚   â”œâ”€â”€ builtin_echo.ds  # echo
+    â”‚   â”œâ”€â”€ builtin_ps.ds    # process status
+    â”‚   â”œâ”€â”€ builtin_help.ds  # help
+    â”‚   â””â”€â”€ builtin_exit.ds  # exit
+    â””â”€â”€ shell_completion.ds # Tab completion
 ```
 
 **Code Example:**
@@ -536,69 +540,69 @@ forge ShellLoop {
 
 ```
 xdv-os/
-├── README.md
-├── LICENSE
-├── State.toml
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── xdv-boot/
-│   ├── State.toml
-│   └── src/
-│       ├── boot_mbr.ds
-│       ├── boot_stage1.ds
-│       ├── boot_gdt.ds
-│       ├── boot_idt.ds
-│       ├── boot_paging.ds
-│       ├── boot_disk.ds
-│       ├── boot_xdvfs_mount.ds
-│       └── boot_kernel_load.ds
-├── xdv-kernel/           # EXISTING (13 sectors)
-│   ├── State.toml
-│   └── sector/
-├── xdv-xdvfs/
-│   ├── State.toml
-│   └── src/
-│       ├── xdvfs_superblock.ds
-│       ├── xdvfs_inode.ds
-│       ├── xdvfs_block_alloc.ds
-│       ├── xdvfs_k_file.ds
-│       ├── xdvfs_q_types.ds
-│       ├── xdvfs_phi_types.ds
-│       ├── xdvfs_directory.ds
-│       ├── xdvfs_mount.ds
-│       └── xdvfs_errors.ds
-├── xdv-runtime/
-│   ├── State.toml
-│   └── src/
-│       ├── runtime_io.ds
-│       ├── runtime_memory.ds
-│       ├── runtime_string.ds
-│       ├── runtime_process.ds
-│       ├── runtime_scheduler.ds
-│       ├── runtime_fs.ds
-│       ├── runtime_console.ds
-│       └── runtime_init.ds
-└── xdv-shell/
-    ├── State.toml
-    └── src/
-        ├── shell_main.ds
-        ├── shell_loop.ds
-        ├── shell_prompt.ds
-        ├── shell_lexer.ds
-        ├── shell_parser.ds
-        ├── shell_executor.ds
-        ├── shell_builtin/
-        │   ├── builtin_cd.ds
-        │   ├── builtin_ls.ds
-        │   ├── builtin_cat.ds
-        │   ├── builtin_mkdir.ds
-        │   ├── builtin_rm.ds
-        │   ├── builtin_echo.ds
-        │   ├── builtin_ps.ds
-        │   ├── builtin_help.ds
-        │   └── builtin_exit.ds
-        └── shell_completion.ds
+â”œâ”€â”€ README.md
+â”œâ”€â”€ LICENSE
+â”œâ”€â”€ State.toml
+â”œâ”€â”€ .github/
+â”‚   â””â”€â”€ workflows/
+â”‚       â””â”€â”€ ci.yml
+â”œâ”€â”€ xdv-boot/
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ boot_mbr.ds
+â”‚       â”œâ”€â”€ boot_stage1.ds
+â”‚       â”œâ”€â”€ boot_gdt.ds
+â”‚       â”œâ”€â”€ boot_idt.ds
+â”‚       â”œâ”€â”€ boot_paging.ds
+â”‚       â”œâ”€â”€ boot_disk.ds
+â”‚       â”œâ”€â”€ boot_xdvfs_mount.ds
+â”‚       â””â”€â”€ boot_kernel_load.ds
+â”œâ”€â”€ xdv-kernel/           # EXISTING (13 sectors)
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ sector/
+â”œâ”€â”€ xdv-xdvfs/
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ xdvfs_superblock.ds
+â”‚       â”œâ”€â”€ xdvfs_inode.ds
+â”‚       â”œâ”€â”€ xdvfs_block_alloc.ds
+â”‚       â”œâ”€â”€ xdvfs_k_file.ds
+â”‚       â”œâ”€â”€ xdvfs_q_types.ds
+â”‚       â”œâ”€â”€ xdvfs_phi_types.ds
+â”‚       â”œâ”€â”€ xdvfs_directory.ds
+â”‚       â”œâ”€â”€ xdvfs_mount.ds
+â”‚       â””â”€â”€ xdvfs_errors.ds
+â”œâ”€â”€ xdv-runtime/
+â”‚   â”œâ”€â”€ State.toml
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ runtime_io.ds
+â”‚       â”œâ”€â”€ runtime_memory.ds
+â”‚       â”œâ”€â”€ runtime_string.ds
+â”‚       â”œâ”€â”€ runtime_process.ds
+â”‚       â”œâ”€â”€ runtime_scheduler.ds
+â”‚       â”œâ”€â”€ runtime_fs.ds
+â”‚       â”œâ”€â”€ runtime_console.ds
+â”‚       â””â”€â”€ runtime_init.ds
+â””â”€â”€ xdv-shell/
+    â”œâ”€â”€ State.toml
+    â””â”€â”€ src/
+        â”œâ”€â”€ shell_main.ds
+        â”œâ”€â”€ shell_loop.ds
+        â”œâ”€â”€ shell_prompt.ds
+        â”œâ”€â”€ shell_lexer.ds
+        â”œâ”€â”€ shell_parser.ds
+        â”œâ”€â”€ shell_executor.ds
+        â”œâ”€â”€ shell_builtin/
+        â”‚   â”œâ”€â”€ builtin_cd.ds
+        â”‚   â”œâ”€â”€ builtin_ls.ds
+        â”‚   â”œâ”€â”€ builtin_cat.ds
+        â”‚   â”œâ”€â”€ builtin_mkdir.ds
+        â”‚   â”œâ”€â”€ builtin_rm.ds
+        â”‚   â”œâ”€â”€ builtin_echo.ds
+        â”‚   â”œâ”€â”€ builtin_ps.ds
+        â”‚   â”œâ”€â”€ builtin_help.ds
+        â”‚   â””â”€â”€ builtin_exit.ds
+        â””â”€â”€ shell_completion.ds
 ```
 
 ---
@@ -631,7 +635,7 @@ This implementation uses **dustlib** and **dustlib_k** for K-Domain only operati
 
 **Key Points:**
 - Full K-Domain (classical) functionality
-- Q/Φ types defined but not functional (domain awareness only)
+- Q/Î¦ types defined but not functional (domain awareness only)
 - Uses dustlib (core types) and dustlib_k (systems programming)
 - All code in DPL with no external dependencies
 
@@ -640,3 +644,4 @@ This implementation uses **dustlib** and **dustlib_k** for K-Domain only operati
 *Document Version: 4.0*  
 *Date: February 2026*  
 *Uses: dustlib, dustlib_k*
+
